@@ -42,7 +42,8 @@ def check_continuity(
         ):
     """
     Return whether f is continuous
-    For f to be contiuous all inverse sets of tau_pre_image must be part of tau_domain.
+    For f to be contiuous all sets from tau_image must be removed
+    Sets are removed if a set from the domain after going through f is in tau_image.
     """
 
     tau_image = set(tuple(sorted(x)) for x in tau_image)
@@ -55,12 +56,3 @@ def check_continuity(
             tau_image.remove(y_set_from_domain)
 
     return len(tau_image) == 0
-
-
-
-D = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
-I = [0, 1, 4, 9, 16]
-f = lambda x: 0
-tauI = power_set(I)
-print(f"tauI: {tauI}")
-print(check_continuity(f, tauI, tauI))
