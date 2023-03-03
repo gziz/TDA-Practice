@@ -2,6 +2,10 @@ from typing import List, Callable
 
 # Helper Funcs
 def power_set(nums: List[int]) -> List[List[int]]:
+    """
+    Get power set of a list of numbers
+    """
+
     out = []
     def helper(i, curr):
 
@@ -29,7 +33,12 @@ def get_inverse(f: Callable, pre_image: List, domain: List) -> List:
     return output
 
 
-def check_continuity(f, domain: List[int], tau_domain: List[List], tau_pre_image: List[List]):
+def check_continuity(
+        f: Callable,
+        domain: List[int],
+        tau_domain: List[List],
+        tau_pre_image: List[List]
+        ):
     """
     Return wether f is continuous
     For f to be contiuous all inverse sets of tauI must be in tauD.
