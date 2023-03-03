@@ -43,6 +43,8 @@ def check_continuity(
     Return whether f is continuous
     For f to be contiuous all inverse sets of tau_pre_image must be part of tau_domain.
     """
+    # Sort tau sets to avoid false positives when 
+    # comparing sets with same elements but different order
     tau_domain = set(tuple(sorted(x)) for x in tau_domain)
 
     for set_pre_image in tau_pre_image:
