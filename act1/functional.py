@@ -20,35 +20,47 @@ def power_set(nums: List[int]) -> List[List[int]]:
     return out
 
 
-def get_inverse(f: Callable, pre_image: List, domain: List) -> List:
+def get_inverse(f: Callable, image: List, domain: List) -> List:
     """
     Return f^(-1)(I).
     """ 
-    inverse_vals = []
+    pre_image = []
 
-    for domain_val in domain:
-        if f(domain_val) in pre_image:
-            inverse_vals.append(domain_val)
+    for x in domain:
+        y = f(x)
+        if y in image:
+            pre_image.append(x)
+
             
-    return inverse_vals
+    return pre_image
 
 
 def check_continuity(
         f: Callable,
-        domain: List[int],
         tau_domain: List[List],
-        tau_pre_image: List[List]
+        tau_image: List[List]
         ):
     """
     Return whether f is continuous
     For f to be contiuous all inverse sets of tau_pre_image must be part of tau_domain.
     """
-    # Sort tau sets to avoid false positives when 
-    # comparing sets with same elements but different order
-    tau_domain = set(tuple(sorted(x)) for x in tau_domain)
 
-    for set_pre_image in tau_pre_image:
-        if not tuple(get_inverse(f, set_pre_image, domain)) in tau_domain:
-            return False
-        
-    return True
+    tau_image = set(tuple(sorted(x)) for x in tau_image)
+
+    for set_from_domain in tau_domain:
+        y_set_from_domain = set([f(x) for x in set_from_domain])
+        y_set_from_domain = tuple(sorted(y_set_from_domain))
+
+        if y_set_from_domain in tau_image:
+            tau_image.remove(y_set_from_domain)
+
+    return len(tau_image) == 0
+
+
+
+D = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
+I = [0, 1, 4, 9, 16]
+f = lambda x: 0
+tauI = power_set(I)
+print(f"tauI: {tauI}")
+print(check_continuity(f, tauI, tauI))
